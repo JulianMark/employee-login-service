@@ -14,14 +14,14 @@ import lombok.ToString;
 @NoArgsConstructor
 public class EmployeeResponse {
 
-        @ApiModelProperty(notes="Resultado de id de empleado exito = <0")
+        @ApiModelProperty(notes="ID del empleado exito = <0")
         private Integer id;
+        @ApiModelProperty(notes="Nombre del empleado exito = JOHN")
         private String name;
+        @ApiModelProperty(notes="Apellido del empleado exito = CONNOR")
         private String lastName;
-        private String nickname;
+        @ApiModelProperty(notes="Tipo empleado exito = 1")
         private Integer idType;
-        private Integer donations;
-        private float hoursWorked;
         @ApiModelProperty(notes="Mensaje de error, en caso de que falle el WS")
         private String errorMessage;
 

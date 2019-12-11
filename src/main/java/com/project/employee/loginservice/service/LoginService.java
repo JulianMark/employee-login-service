@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Api(value="Employee login WS", produces = MediaType.APPLICATION_JSON_VALUE)
-public class EmployeeLoginRest {
+public class LoginService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeLoginRest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginService.class);
     private final EmployeeMapper employeeMapper;
 
     @Autowired
-    public EmployeeLoginRest(EmployeeMapper employeeMapper) {
+    public LoginService(EmployeeMapper employeeMapper) {
         this.employeeMapper = employeeMapper;
     }
 
@@ -34,25 +34,42 @@ public class EmployeeLoginRest {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Obtener empleado por login")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Se obtienen los datos del empleado logueado", response = EmployeeResponse.class),
-            @ApiResponse(code = 206, message = "No se obtuvo la informacion del empleado", response = EmployeeResponse.class),
+            @ApiResponse(code = 200, message = "Se obtienen los datos del empleado", response = EmployeeResponse.class),
+            @ApiResponse(code = 204, message = "El usuario o password son incorrectos", response = EmployeeResponse.class),
             @ApiResponse(code = 400, message = "Argumentos inválidos", response = EmployeeResponse.class),
             @ApiResponse(code = 500, message = "Error inesperado del servicio web", response = EmployeeResponse.class)
     })
     public ResponseEntity<EmployeeResponse> loginEmployee(
             @RequestBody EmployeeRequest employeeRequest){
             try {
+                if (employeeRequest == null){
+                    throw new IllegalArgumentException("los datos de logueo no pueden ser nulos");
+                }
+                validateProperty(employeeRequest.getNickname(),"nickname");
+                validateProperty(employeeRequest.getPassword(), "password");
                 EmployeeResponse response = employeeMapper.loginEmployee(employeeRequest);
                 if (response == null){
-                    throw new Exception("empleado null");
+                    return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                            .body(new EmployeeResponse("Empleado no encontrado"));
                 }
+                LOGGER.info("Se logueo empleado {} {}",response.getName(),response.getLastName());
                 return  ResponseEntity.ok(response);
             } catch (IllegalArgumentException iae) {
                 LOGGER.warn("Los parametros ingresados son invalidos", iae);
                 return ResponseEntity.badRequest().body(new EmployeeResponse(iae.getMessage()));
             } catch (Exception ex) {
                 LOGGER.error("Ocurrio un error al intentar loguear el usuario {}",employeeRequest.getNickname(), ex);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new EmployeeResponse(ex.getMessage()));
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR).body(new EmployeeResponse(ex.getMessage()));
             }
+    }
+
+    private void validateProperty (String property, String propertyName) {
+        if (property == null){
+            throw new IllegalArgumentException(propertyName+" no puede ser nulo");
+        }
+        if (property.isEmpty()){
+            throw new IllegalArgumentException(propertyName+" no puede estar vacio");
+        }
     }
 }

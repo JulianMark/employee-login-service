@@ -4,9 +4,7 @@
 
 <mapper namespace="com.project.employee.loginservice.mapper.EmployeeMapper">
     <select id="loginEmployee" resultType="com.project.employee.loginservice.service.http.EmployeeResponse">
-		SELECT ID, NAME, LASTNAME, NICKNAME, E.ID_TYPE_EMPLOYEE IDTYPE, (SELECT COUNT (ID) FROM DONATION D
-        WHERE ID_EMPLOYEE_TEAM = E.ID ) DONATIONS, (SELECT SUM (PRODUCTIVE_HOURS + NON_PRODUCTIVE_HOURS) FROM DAILY_RECORDS DR
-        WHERE ID_EMPLOYEE_TEAM = E.ID ) HOURSWORKED
+		SELECT ID, NAME, LASTNAME,ID_TYPE_EMPLOYEE IDTYPE
         FROM EMPLOYEES E
         WHERE NICKNAME LIKE #{employeeLogin.nickname}
         AND PASSWORD LIKE #{employeeLogin.password}
