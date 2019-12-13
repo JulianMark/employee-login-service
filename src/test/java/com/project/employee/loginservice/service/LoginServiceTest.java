@@ -97,7 +97,7 @@ class LoginServiceTest {
 
             @Test
             @DisplayName("When EmployeeMapper throws Exception")
-            public void loginEmployee_EmployeeResponseIsNull_ReturnsNoContent(){
+            public void loginEmployee_EmployeeResponseIsNull_ReturnsNoContent() {
                 when(employeeMapper.loginEmployee(any())).thenReturn(null);
                 ResponseEntity<EmployeeResponse> employeeResponseEntity = sut.loginEmployee(VALID_EMPLOYEE_REQUEST);
                 assertThat("Status Code Response",
