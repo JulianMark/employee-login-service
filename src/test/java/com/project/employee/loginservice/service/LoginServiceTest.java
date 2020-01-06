@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.suite.api.SuiteDisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.not;
 
-@SuiteDisplayName("Employee Login Service")
+@DisplayName("Employee Login Service")
 class LoginServiceTest {
 
     private static final EmployeeRequest VALID_EMPLOYEE_REQUEST = new EmployeeRequest("TEST","123456");
@@ -39,11 +38,11 @@ class LoginServiceTest {
     }
 
     @Nested
-    @SuiteDisplayName("Obtain employee from login")
+    @DisplayName("Obtain employee from login")
     class ObtainEmployee {
 
         @Nested
-        @SuiteDisplayName("Should return 400 (Bad Request)")
+        @DisplayName("Should return 400 (Bad Request)")
         class ObtainEmployeeBadRequestTest {
 
             @Test
@@ -77,7 +76,7 @@ class LoginServiceTest {
         }
 
         @Nested
-        @SuiteDisplayName("Should return 500 (Internal Server Error)")
+        @DisplayName("Should return 500 (Internal Server Error)")
         class ObtainEmployeeInternalServerErrorTest {
 
             @Test
@@ -92,7 +91,7 @@ class LoginServiceTest {
         }
 
         @Nested
-        @SuiteDisplayName("Should return 204 (No Content)")
+        @DisplayName("Should return 204 (No Content)")
         class ObtainEmployeeNoContentTest {
 
             @Test
@@ -107,7 +106,7 @@ class LoginServiceTest {
         }
 
         @Nested
-        @SuiteDisplayName("Should return 200 (OK)")
+        @DisplayName("Should return 200 (OK)")
         class ObtainEmployeeStatusOKTest {
 
             @Test

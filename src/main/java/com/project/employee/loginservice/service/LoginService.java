@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.project.employee.loginservice.Utils.PropertyValidator.validateProperty;
+
 @RestController
 @Api(value="Employee login WS", produces = MediaType.APPLICATION_JSON_VALUE)
 public class LoginService {
@@ -64,12 +66,4 @@ public class LoginService {
             }
     }
 
-    private void validateProperty (String property, String propertyName) {
-        if (property == null){
-            throw new IllegalArgumentException(propertyName+" no puede ser nulo");
-        }
-        if (property.isEmpty()){
-            throw new IllegalArgumentException(propertyName+" no puede estar vacio");
-        }
-    }
 }
