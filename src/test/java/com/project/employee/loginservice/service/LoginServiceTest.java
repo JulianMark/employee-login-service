@@ -110,8 +110,8 @@ class LoginServiceTest {
         class ObtainEmployeeStatusOKTest {
 
             @Test
-            @DisplayName("When No Exception is Catched")
-            public void loginEmployee_NoExceptionCatched_ReturnsOk(){
+            @DisplayName("When No Exception is Caught")
+            public void loginEmployee_NoExceptionCaught_ReturnsOk(){
                 when(employeeMapper.loginEmployee(any()))
                         .thenReturn(new EmployeeResponse(1,"NAME","LASTNAME",1,null));
                 ResponseEntity<EmployeeResponse> employeeResponseEntity = sut.loginEmployee(VALID_EMPLOYEE_REQUEST);
