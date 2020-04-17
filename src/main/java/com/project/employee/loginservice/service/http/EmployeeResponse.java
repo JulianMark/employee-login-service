@@ -22,6 +22,8 @@ public class EmployeeResponse {
         private String lastName;
         @ApiModelProperty(notes="Tipo empleado exito = 1")
         private Integer idType;
+        @ApiModelProperty(notes="Campaña actual exito = 1")
+        private Integer idCampaign;
         @ApiModelProperty(notes="Mensaje de error, en caso de que falle el WS")
         private String errorMessage;
 

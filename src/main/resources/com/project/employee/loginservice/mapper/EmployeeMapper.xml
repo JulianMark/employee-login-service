@@ -4,9 +4,19 @@
 
 <mapper namespace="com.project.employee.loginservice.mapper.EmployeeMapper">
     <select id="loginEmployee" resultType="com.project.employee.loginservice.service.http.EmployeeResponse">
-		SELECT ID, NAME, LASTNAME,ID_TYPE_EMPLOYEE IDTYPE
+        SELECT E.ID, E.NAME, E.LASTNAME
+              , (SELECT T.ID_TYPE_EMPLOYEE FROM TEAMS T
+	              WHERE 1 = 1
+	              AND T.FINAL_DATE IS NULL
+	              AND T.STATUS IS TRUE
+  	              AND T.ID_EMPLOYEE = E.ID ) AS IDTYPE
+              , (SELECT T.ID_CAMPAIGN FROM TEAMS T
+                  WHERE 1 = 1
+                  AND T.FINAL_DATE IS NULL
+                  AND T.STATUS IS TRUE
+                  AND T.ID_EMPLOYEE = E.ID) AS IDCAMPAIGN
         FROM EMPLOYEES E
-        WHERE NICKNAME LIKE #{employeeLogin.nickname}
-        AND PASSWORD LIKE #{employeeLogin.password}
+        WHERE E.NICKNAME LIKE #{employeeLogin.nickname}
+        AND E.PASSWORD LIKE #{employeeLogin.password}
 	</select>
 </mapper>

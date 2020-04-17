@@ -18,7 +18,7 @@ public class SwaggerConfig {
 	private static final Contact CONTACT = new Contact("Fundraising", null,
 			"julian.markowskyj@gmail.com.ar");
 	private static final String DESCRIPTION = "Servicio que retorna empleados logueados";
-	private static final String SERVICE_VERSION = "0.0.1";
+	private static final String SERVICE_VERSION = "1.0.0";
 
 	ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
