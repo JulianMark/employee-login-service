@@ -1,4 +1,4 @@
-package com.project.employee.loginservice.config;
+package com.project.employee.login.config;
 
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.junit.Before;
@@ -16,10 +16,12 @@ public class SwaggerConfigTest {
     private SwaggerConfig config;
 
     @Before
-    public void init() {config = new SwaggerConfig();}
+    public void init() {
+        config = new SwaggerConfig();
+    }
 
     @Test
-    public void swagger_version_must_be_the_same_as_pom () throws Exception {
+    public void swagger_version_must_be_the_same_as_pom() throws Exception {
         final String pomVersion = getVersion();
         final ApiInfo apiInfo = config.apiInfo();
         assertThat(pomVersion).containsSequence(apiInfo.getVersion());

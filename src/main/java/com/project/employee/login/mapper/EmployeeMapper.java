@@ -1,7 +1,7 @@
-package com.project.employee.loginservice.mapper;
+package com.project.employee.login.mapper;
 
-import com.project.employee.loginservice.service.http.EmployeeRequest;
-import com.project.employee.loginservice.service.http.EmployeeResponse;
+import com.project.employee.login.service.http.EmployeeRequest;
+import com.project.employee.login.service.http.EmployeeResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;

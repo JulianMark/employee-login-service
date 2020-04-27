@@ -1,4 +1,4 @@
-package com.project.employee.loginservice.service.http;
+package com.project.employee.login.service.http;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,9 +14,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class EmployeeRequest {
 
-    @ApiModelProperty(notes="Nickname del empleado necesario para login", required = true, example = "NICKNAME")
+    @ApiModelProperty(notes = "Nickname del empleado necesario para login", required = true, example = "NICKNAME")
     private String nickname;
 
-    @ApiModelProperty(notes="Password del empleado necesaria para el login", required = true, example = "123")
+    @ApiModelProperty(notes = "Password del empleado necesaria para el login", required = true, example = "123")
     private String password;
 }
