@@ -1,7 +1,5 @@
 package com.project.employee.login.service;
 
-import com.project.employee.login.mapper.EmployeeMapper;
-import com.project.employee.login.service.exception.EmployeeResponseException;
 import com.project.employee.login.service.http.EmployeeRequest;
 import com.project.employee.login.service.http.EmployeeResponse;
 import io.swagger.annotations.Api;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.function.Function;
 
 import static com.project.employee.login.service.exception.RequestIllegalArgumentException.requestValidate;
 
@@ -28,11 +26,11 @@ import static com.project.employee.login.service.exception.RequestIllegalArgumen
 public class LoginService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginService.class);
-    private final EmployeeMapper employeeMapper;
+    private final Function<EmployeeRequest, ResponseEntity<EmployeeResponse>> loginBuilder;
 
     @Autowired
-    public LoginService(EmployeeMapper employeeMapper) {
-        this.employeeMapper = employeeMapper;
+    public LoginService(Function<EmployeeRequest, ResponseEntity<EmployeeResponse>> loginBuilder) {
+        this.loginBuilder = loginBuilder;
     }
 
     @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -50,15 +48,7 @@ public class LoginService {
             @RequestBody EmployeeRequest employeeRequest) {
         try {
             requestValidate(employeeRequest);
-            return Optional.ofNullable(employeeMapper.loginEmployee(employeeRequest))
-                    .map(employeeResponse -> {
-                        LOGGER.info("Se logueo empleado {} {}", employeeResponse.getName(), employeeResponse.getLastName());
-                        return ResponseEntity.ok(employeeResponse);
-                    })
-                    .orElseThrow(() -> new EmployeeResponseException(employeeRequest.getNickname()));
-        } catch (EmployeeResponseException ere) {
-            LOGGER.warn("No se obtuvo un usuario con los datos ingresados ", ere);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new EmployeeResponse(ere.getMessage()));
+            return loginBuilder.apply(employeeRequest);
         } catch (IllegalArgumentException iae) {
             LOGGER.warn("Los parametros ingresados son invalidos ", iae);
             return ResponseEntity.badRequest().body(new EmployeeResponse(iae.getMessage()));
