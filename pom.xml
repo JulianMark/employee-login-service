@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.project.employee</groupId>
     <artifactId>login-service</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>login-service</name>
     <description>service login employee</description>
 
